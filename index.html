@@ -1,1 +1,30 @@
-Hello World
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>WebView Test Page</title>
+<script>
+function requestNotificationPermission() {
+    Notification.requestPermission().then(permission => {
+        if (permission === 'granted') {
+            new Notification('Hi there! This is a test notification.');
+        }
+    });
+}
+
+function toggleTheme() {
+    const body = document.body;
+    body.style.backgroundColor = body.style.backgroundColor === 'black' ? 'white' : 'black';
+    body.style.color = body.style.color === 'white' ? 'black' : 'white';
+}
+</script>
+</head>
+<body>
+<h1>WebView Testing Page</h1>
+<button onclick="requestNotificationPermission()">Enable Notifications</button>
+<p><a href="tel:+1234567890">Call +1234567890</a></p>
+<p><a href="mailto:test@example.com">Send Email to test@example.com</a></p>
+<button onclick="toggleTheme()">Toggle Theme</button>
+</body>
+</html>
