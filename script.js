@@ -1,6 +1,6 @@
 function sendTestNotification() {
-    // Replace with the URL of your server-side script
-    var url = 'https://your-server.com/send-notification';
+
+    var url = 'https://http://brotjefors.pythonanywhere.com/send-notification';
   
     // The data to send to the server-side script
     var data = {
