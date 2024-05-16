@@ -1,6 +1,12 @@
 from flask import Flask, request
+import firebase_admin
+from firebase_admin import credentials, messaging
 
 app = Flask(__name__)
+
+service_account_info = json.loads(os.getenv('FIREBASE_SERVICE_ACCOUNT'))
+cred = credentials.Certificate(service_account_info)
+firebase_admin.initialize_app(cred)
 
 @app.route('/send-notification', methods=['POST'])
 def send_notification():
