@@ -1,19 +1,27 @@
 from flask import Flask, request
-from pyfcm import FCMNotification
 
 app = Flask(__name__)
 
 @app.route('/send-notification', methods=['POST'])
 def send_notification():
-    data = request.get_json()
 
-    push_service = FCMNotification(api_key="<Your-Server-Key>")
+    jsondata = request.get_json()
 
-    registration_id = "<Device-registration-token>"
-    message_title = data.get('title')
-    message_body = data.get('body')
+    registration_token = 'ddRvgtPeRoOO5pF8L5n5wk:APA91bF7P6vT1SyzpQi5tEf9gAXqfThhK9JIJBhneeEbNN5HdvN8LW-d-fC8je6b3bCfLnpDxt1WnuMCkj4RK6ehIma-4k1p0SPg_moTddq_rjPSddbHzfZ5ZTKBaCd0pnbbnyJtJv7d'
 
-    result = push_service.notify_single_device(registration_id=registration_id, message_title=message_title, message_body=message_body)
+    message = messaging.Message(
+        data={
+            'title': jsondata.get('title'),
+            'body': jsondata.get('body'),
+        },
+        token=registration_token,
+    )
+
+    # Send a message to the device corresponding to the provided
+    # registration token.
+    response = messaging.send(message)
+    # Response is a message ID string.
+    print('Successfully sent message:', response)
 
     return result
 
