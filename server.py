@@ -17,5 +17,9 @@ def send_notification():
 
     return result
 
+@app.route('/test', methods=['GET'])
+def test_endpoint():
+    return "Endpoint is working!"
+
 if __name__ == '__main__':
     app.run(port=5000)
