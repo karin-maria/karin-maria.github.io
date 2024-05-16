@@ -1,6 +1,6 @@
 function sendTestNotification() {
 
-    var url = 'http://brotjefors.pythonanywhere.com/send-notification';
+    var url = 'https://brotjefors.pythonanywhere.com/send-notification';
 
     // The data to send to the server-side script
     var data = {
@@ -19,7 +19,7 @@ function sendTestNotification() {
 }
 
 function test() {
-    var url = 'http://brotjefors.pythonanywhere.com/test';
+    var url = 'https://brotjefors.pythonanywhere.com/test';
 
     fetch(url, { method: 'GET' })
     .then(response => response.text())
