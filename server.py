@@ -10,8 +10,11 @@ firebase_admin.initialize_app(cred)
 
 @app.route('/send-notification', methods=['POST'])
 def send_notification():
+    print('In send_notification!')
 
     jsondata = request.get_json()
+
+    print('JSON Data:', jsondata)
 
     registration_token = 'ddRvgtPeRoOO5pF8L5n5wk:APA91bF7P6vT1SyzpQi5tEf9gAXqfThhK9JIJBhneeEbNN5HdvN8LW-d-fC8je6b3bCfLnpDxt1WnuMCkj4RK6ehIma-4k1p0SPg_moTddq_rjPSddbHzfZ5ZTKBaCd0pnbbnyJtJv7d'
 
@@ -22,6 +25,8 @@ def send_notification():
         },
         token=registration_token,
     )
+
+    print('Message:', message)
 
     # Send a message to the device corresponding to the provided
     # registration token.
