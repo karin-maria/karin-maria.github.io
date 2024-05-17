@@ -6,23 +6,23 @@ from firebase_admin import credentials, messaging
 
 app = Flask(__name__)
 
+print('FIREBASE_SERVICE_ACCOUNT:', os.getenv('FIREBASE_SERVICE_ACCOUNT'))
+
+service_account_info = json.loads(os.getenv('FIREBASE_SERVICE_ACCOUNT'))
+
+print('Service Account Info:', service_account_info)
+
+cred = credentials.Certificate(service_account_info)
+
+print('Credential:', cred)
+
+firebase_admin.initialize_app(cred)
+
+print('Firebase App Initialized!')
+
 @app.route('/send-notification', methods=['POST'])
 def send_notification():
     print('In send_notification!')
-
-    print('FIREBASE_SERVICE_ACCOUNT:', os.getenv('FIREBASE_SERVICE_ACCOUNT'))
-
-    service_account_info = json.loads(os.getenv('FIREBASE_SERVICE_ACCOUNT'))
-
-    print('Service Account Info:', service_account_info)
-
-    cred = credentials.Certificate(service_account_info)
-
-    print('Credential:', cred)
-
-    firebase_admin.initialize_app(cred)
-
-    print('Firebase App Initialized!')
 
     jsondata = request.get_json()
 
