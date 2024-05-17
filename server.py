@@ -18,10 +18,13 @@ def receive_token():
     jsondata = request.get_json()
     registration_token = jsondata.get('token')
 
+    print("Registration token received: ", registration_token)
+
+    with open('.env', 'a') as file:
+        file.write(f'FIREBASE_REGISTRATION_TOKEN={registration_token}\n')
+
     if registration_token is None:
         return 'No token found in request', 400
-
-    # TODO: Store the token in your database
 
     return 'Token received successfully', 200
 
@@ -29,8 +32,6 @@ def receive_token():
 def send_notification():
 
     jsondata = request.get_json()
-
-    #'ddRvgtPeRoOO5pF8L5n5wk:APA91bF7P6vT1SyzpQi5tEf9gAXqfThhK9JIJBhneeEbNN5HdvN8LW-d-fC8je6b3bCfLnpDxt1WnuMCkj4RK6ehIma-4k1p0SPg_moTddq_rjPSddbHzfZ5ZTKBaCd0pnbbnyJtJv7d'
 
     if registration_token is None:
         return 'No token found in request', 400
@@ -40,7 +41,7 @@ def send_notification():
             title=jsondata.get('title'),
             body=jsondata.get('body'),
         ),
-        token=registration_token,
+        token=os.getenv('FIREBASE_REGISTRATION_TOKEN') # registration_
     )
 
     response = messaging.send(message)
