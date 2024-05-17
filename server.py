@@ -30,13 +30,21 @@ def send_notification():
 
     registration_token = 'ddRvgtPeRoOO5pF8L5n5wk:APA91bF7P6vT1SyzpQi5tEf9gAXqfThhK9JIJBhneeEbNN5HdvN8LW-d-fC8je6b3bCfLnpDxt1WnuMCkj4RK6ehIma-4k1p0SPg_moTddq_rjPSddbHzfZ5ZTKBaCd0pnbbnyJtJv7d'
 
+    #message = messaging.Message(
+    #    data={
+    #        'title': jsondata.get('title'),
+    #        'body': jsondata.get('body'),
+    #    },
+    #    token=registration_token,
+    #)
+
     message = messaging.Message(
-        data={
-            'title': jsondata.get('title'),
-            'body': jsondata.get('body'),
-        },
-        token=registration_token,
-    )
+    notification=messaging.Notification(
+        title=jsondata.get('title'),
+        body=jsondata.get('body'),
+    ),
+    token=registration_token,
+)
 
     print('Message:', message)
 
