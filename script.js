@@ -1,5 +1,7 @@
 function sendTestNotification() {
 
+    console.log('Sending test notification...');
+
     var url = 'https://brotjefors.pythonanywhere.com/send-notification';
 
     // The data to send to the server-side script
@@ -16,9 +18,12 @@ function sendTestNotification() {
         },
         body: JSON.stringify(data),
     });
+
+    console.log('Test notification sent!');
 }
 
 function test() {
+
     var url = 'https://brotjefors.pythonanywhere.com/test';
 
     fetch(url, { method: 'GET' })
