@@ -17,6 +17,8 @@ def receive_token():
     if not firebase_admin._apps:
         initFirebase()
         print("Firebase initialized")
+    else:
+        print("Firebase already initialized")
     jsondata = request.get_json()
     registration_token = jsondata.get('token')
 
@@ -36,6 +38,8 @@ def send_notification():
     if not firebase_admin._apps:
         initFirebase()
         print("Firebase initialized")
+    else:
+        print("Firebase already initialized")
 
     jsondata = request.get_json()
 
