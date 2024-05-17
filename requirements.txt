@@ -1,4 +1,3 @@
 flask
-json
 firebase_admin
 python-dotenv
