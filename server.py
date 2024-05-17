@@ -36,7 +36,7 @@ def send_notification():
     # Response is a message ID string.
     print('Successfully sent message:', response)
 
-    return result
+    return response
 
 @app.route('/test', methods=['GET'])
 def test_endpoint():
