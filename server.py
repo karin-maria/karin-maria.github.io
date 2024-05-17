@@ -13,8 +13,16 @@ def send_notification():
     print('FIREBASE_SERVICE_ACCOUNT:', os.getenv('FIREBASE_SERVICE_ACCOUNT'))
 
     service_account_info = json.loads(os.getenv('FIREBASE_SERVICE_ACCOUNT'))
+
+    print('Service Account Info:', service_account_info)
+
     cred = credentials.Certificate(service_account_info)
+
+    print('Credential:', cred)
+
     firebase_admin.initialize_app(cred)
+
+    print('Firebase App Initialized!')
 
     jsondata = request.get_json()
 
