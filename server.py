@@ -7,14 +7,14 @@ from firebase_admin import credentials, messaging
 app = Flask(__name__)
 
 # Initialize Firebase
-service_account_info = json.loads(os.getenv('FIREBASE_SERVICE_ACCOUNT'))
-cred = credentials.Certificate(service_account_info)
-firebase_admin.initialize_app(cred)
-
-registration_token = None
+def initFirebase():
+    service_account_info = json.loads(os.getenv('FIREBASE_SERVICE_ACCOUNT'))
+    cred = credentials.Certificate(service_account_info)
+    firebase_admin.initialize_app(cred)
 
 @app.route('/receive-token', methods=['POST'])
 def receive_token():
+    initFirebase()
     jsondata = request.get_json()
     registration_token = jsondata.get('token')
 
@@ -32,9 +32,6 @@ def receive_token():
 def send_notification():
 
     jsondata = request.get_json()
-
-    if registration_token is None:
-        return 'No token found in request', 400
 
     message = messaging.Message(
         notification=messaging.Notification(
