@@ -32,6 +32,9 @@ def receive_token():
 @app.route('/send-notification', methods=['POST'])
 def send_notification():
 
+    if not firebase_admin._apps:
+        initFirebase()
+
     jsondata = request.get_json()
 
     message = messaging.Message(
