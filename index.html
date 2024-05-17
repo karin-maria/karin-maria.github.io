@@ -5,28 +5,17 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>WebView Test Page</title>
 <script>
-function requestNotificationPermission() {
-    Notification.requestPermission().then(permission => {
-        if (permission === 'granted') {
-            new Notification('Hi there! This is a test notification.');
-        }
-    });
-}
 
-function toggleTheme() {
-    const body = document.body;
-    body.style.backgroundColor = body.style.backgroundColor === 'black' ? 'white' : 'black';
-    body.style.color = body.style.color === 'white' ? 'black' : 'white';
-}
+
 </script>
 </head>
 <body>
 <h1>WebView Testing Page</h1>
-<button onclick="requestNotificationPermission()">Enable Notifications</button>
+
 <p><a href="tel:0702391996">Call Karin</a></p>
 <p><a href="mailto:k.brotjefors@gmailcom">Send Email to Karin</a></p>
 
-<button onclick="sendTestNotification()">Send Notification</button>
+<button onclick="sendTestNotification()">Send Push Notification</button>
 
 <script src="script.js"></script>
 </body>
