@@ -14,7 +14,8 @@ def initFirebase():
 
 @app.route('/receive-token', methods=['POST'])
 def receive_token():
-    initFirebase()
+    if not firebase_admin._apps:
+        initFirebase()
     jsondata = request.get_json()
     registration_token = jsondata.get('token')
 
