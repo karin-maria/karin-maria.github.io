@@ -10,6 +10,8 @@ app = Flask(__name__)
 def send_notification():
     print('In send_notification!')
 
+    print('FIREBASE_SERVICE_ACCOUNT:', os.getenv('FIREBASE_SERVICE_ACCOUNT')
+
     service_account_info = json.loads(os.getenv('FIREBASE_SERVICE_ACCOUNT'))
     cred = credentials.Certificate(service_account_info)
     firebase_admin.initialize_app(cred)
