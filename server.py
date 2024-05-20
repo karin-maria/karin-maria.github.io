@@ -22,10 +22,12 @@ def receive_token():
     jsondata = request.get_json()
     registration_token = jsondata.get('firebaseToken')
     bank_id_token = jsondata.get('bankIdToken')
+    firebaseIdToken = jsondata.get('firebaseIdToken')
     subscribed_to_notifications = jsondata.get('subscribed_to_notifications')
 
     print("Registration token received: ", registration_token)
     print("Bank ID token received: ", bank_id_token)
+    print("Firebase ID token received: ", firebaseIdToken)
     print("Subscribed to notifications: ", subscribed_to_notifications)
 
     with open('.env', 'a') as file:
@@ -36,7 +38,8 @@ def receive_token():
         return 'No token found in request', 400
 
     # Decode the Firebase token to get the uid
-    decoded_token = auth.verify_id_token(registration_token)
+
+    decoded_token = auth.verify_id_token(firebaseIdToken)
     uid = decoded_token['uid']
 
     # Set the custom claims
