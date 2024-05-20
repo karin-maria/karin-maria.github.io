@@ -50,10 +50,12 @@ def receive_token():
 def send_notification():
 
     users = auth.list_users().iterate_all()
+    print("Users: ", users)
 
     for user in users:
         print("User uid: ", user.uid)
         claims = user.custom_claims
+        print("User claims: ", claims)
 
 
         if not firebase_admin._apps:
