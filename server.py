@@ -36,7 +36,7 @@ def receive_token():
         return 'No token found in request', 400
 
     # Decode the Firebase token to get the uid
-    decoded_token = auth.verify_id_token(firebaseToken)
+    decoded_token = auth.verify_id_token(registration_token)
     uid = decoded_token['uid']
 
     # Set the custom claims
