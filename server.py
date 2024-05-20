@@ -2,7 +2,7 @@ import os
 import json
 from flask import Flask, request
 import firebase_admin
-from firebase_admin import credentials, messaging
+from firebase_admin import credentials, messaging, auth
 
 app = Flask(__name__)
 
@@ -20,15 +20,25 @@ def receive_token():
     else:
         print("Firebase already initialized")
     jsondata = request.get_json()
-    registration_token = jsondata.get('token')
+    registration_token = jsondata.get('firebaseToken')
+    bank_id_token = jsondata.get('bankIdToken')
 
     print("Registration token received: ", registration_token)
+    print("Bank ID token received: ", bank_id_token)
 
     with open('.env', 'a') as file:
         file.write(f'FIREBASE_REGISTRATION_TOKEN={registration_token}\n')
+        file.write(f'BANK_ID_TOKEN={bank_id_token}\n')
 
-    if registration_token is None:
+    if registration_token is None or bank_id_token is None:
         return 'No token found in request', 400
+
+    # Decode the Firebase token to get the uid
+    decoded_token = auth.verify_id_token(firebaseToken)
+    uid = decoded_token['uid']
+
+    # Set the custom claims
+    auth.set_custom_user_claims(uid, {'bankIdToken': bankIdToken})
 
     return 'Token received successfully', 200
 
