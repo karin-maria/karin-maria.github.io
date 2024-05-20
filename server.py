@@ -49,33 +49,36 @@ def receive_token():
 @app.route('/send-notification', methods=['POST'])
 def send_notification():
 
-    user = auth.get_user(uid)
-    print("User uid: ", user.uid)
-    claims = user.custom_claims
+    users = auth.list_users().iterate_all()
 
-    if not firebase_admin._apps:
-        initFirebase()
-        print("Firebase initialized")
-    else:
-        print("Firebase already initialized")
+    or user in users:
+        print("User uid: ", user.uid)
+        claims = user.custom_claims
 
-    jsondata = request.get_json()
 
-    print("Sending notification to user: ", user.email)
-    print("User subscribed to notifications: ", claims.get('subscribedToNotifications'))
+        if not firebase_admin._apps:
+            initFirebase()
+            print("Firebase initialized")
+        else:
+            print("Firebase already initialized")
 
-    if claims.get('subscribedToNotifications'):
-        message = messaging.Message(
-            notification=messaging.Notification(
-                title=jsondata.get('title'),
-                body=jsondata.get('body'),
-            ),
-            token=os.getenv('FIREBASE_REGISTRATION_TOKEN'),
-        )
+
+
+        print("Sending notification to user: ", user.email)
+        print("User subscribed to notifications: ", claims.get('subscribedToNotifications'))
+
+        if claims.get('subscribedToNotifications'):
+            message = messaging.Message(
+                notification=messaging.Notification(
+                    title=jsondata.get('title'),
+                    body=jsondata.get('body'),
+                ),
+                token=os.getenv('FIREBASE_REGISTRATION_TOKEN'),
+            )
 
         # Send the message
         response = messaging.send(message)
-    return response
+    return 'Notifications sent successfully', 200
 
 @app.route('/test', methods=['GET'])
 def test_endpoint():
