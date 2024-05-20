@@ -38,8 +38,10 @@ def receive_token():
         return 'No token found in request', 400
 
     # Decode the Firebase token to get the uid
-
-    decoded_token = auth.verify_id_token(firebaseIdToken)
+    try:
+        decoded_token = auth.verify_id_token(firebaseIdToken)
+    except Exception as e:
+        print(f"An error occurred while verifying the ID token: {e}")
     print("Decoded token: ", decoded_token)
     uid = decoded_token['uid']
 
