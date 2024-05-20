@@ -22,6 +22,7 @@ def receive_token():
     jsondata = request.get_json()
     registration_token = jsondata.get('firebaseToken')
     bank_id_token = jsondata.get('bankIdToken')
+    subscribed_to_notifications = jsondata.get('subscribed_to_notifications')
 
     print("Registration token received: ", registration_token)
     print("Bank ID token received: ", bank_id_token)
@@ -39,7 +40,7 @@ def receive_token():
 
     # Set the custom claims
     auth.set_custom_user_claims(uid, {'bankIdToken': bankIdToken})
-    auth.set_custom_user_claims(uid, {'subscribedToNotifications': True})
+    auth.set_custom_user_claims(uid, {'subscribedToNotifications': subscribed_to_notifications})
 
     return 'Token received successfully', 200
 
