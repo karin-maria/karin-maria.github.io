@@ -40,7 +40,8 @@ def receive_token():
     uid = decoded_token['uid']
 
     # Set the custom claims
-    auth.set_custom_user_claims(uid, {'bankIdToken': bankIdToken})
+    print("Setting custom claims for user: ", uid)
+    auth.set_custom_user_claims(uid, {'bankIdToken': bank_id_token})
     auth.set_custom_user_claims(uid, {'subscribedToNotifications': subscribed_to_notifications})
 
     return 'Token received successfully', 200
@@ -49,6 +50,7 @@ def receive_token():
 def send_notification():
 
     user = auth.get_user(uid)
+    print("User uid: ", user.uid)
     claims = user.custom_claims
 
     if not firebase_admin._apps:
@@ -58,6 +60,9 @@ def send_notification():
         print("Firebase already initialized")
 
     jsondata = request.get_json()
+
+    print("Sending notification to user: ", user.email)
+    print("User subscribed to notifications: ", claims.get('subscribedToNotifications'))
 
     if claims.get('subscribedToNotifications'):
         message = messaging.Message(
