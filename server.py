@@ -39,11 +39,15 @@ def receive_token():
 
     # Set the custom claims
     auth.set_custom_user_claims(uid, {'bankIdToken': bankIdToken})
+    auth.set_custom_user_claims(uid, {'subscribedToNotifications': True})
 
     return 'Token received successfully', 200
 
 @app.route('/send-notification', methods=['POST'])
 def send_notification():
+
+    user = auth.get_user(uid)
+    claims = user.custom_claims
 
     if not firebase_admin._apps:
         initFirebase()
@@ -53,15 +57,17 @@ def send_notification():
 
     jsondata = request.get_json()
 
-    message = messaging.Message(
-        notification=messaging.Notification(
-            title=jsondata.get('title'),
-            body=jsondata.get('body'),
-        ),
-        token=os.getenv('FIREBASE_REGISTRATION_TOKEN') # registration_
-    )
+    if claims.get('subscribedToNotifications'):
+        message = messaging.Message(
+            notification=messaging.Notification(
+                title=jsondata.get('title'),
+                body=jsondata.get('body'),
+            ),
+            token=os.getenv('FIREBASE_REGISTRATION_TOKEN'),
+        )
 
-    response = messaging.send(message)
+        # Send the message
+        response = messaging.send(message)
     return response
 
 @app.route('/test', methods=['GET'])
