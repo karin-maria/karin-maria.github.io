@@ -51,7 +51,7 @@ def send_notification():
 
     users = auth.list_users().iterate_all()
 
-    or user in users:
+    for user in users:
         print("User uid: ", user.uid)
         claims = user.custom_claims
 
