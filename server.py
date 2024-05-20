@@ -26,6 +26,7 @@ def receive_token():
 
     print("Registration token received: ", registration_token)
     print("Bank ID token received: ", bank_id_token)
+    print("Subscribed to notifications: ", subscribed_to_notifications)
 
     with open('.env', 'a') as file:
         file.write(f'FIREBASE_REGISTRATION_TOKEN={registration_token}\n')
