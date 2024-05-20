@@ -20,29 +20,25 @@ def receive_token():
     else:
         print("Firebase already initialized")
     jsondata = request.get_json()
-    registration_token = jsondata.get('firebaseToken')
+    fcmToken = jsondata.get('fcmToken')
     bank_id_token = jsondata.get('bankIdToken')
     firebaseIdToken = jsondata.get('firebaseIdToken')
     subscribed_to_notifications = jsondata.get('subscribed_to_notifications')
 
-    print("Registration token received: ", registration_token)
+    print("fcmTokenreceived: ", fcmToken)
     print("Bank ID token received: ", bank_id_token)
     print("Firebase ID token received: ", firebaseIdToken)
     print("Subscribed to notifications: ", subscribed_to_notifications)
 
     with open('.env', 'a') as file:
-        file.write(f'FIREBASE_REGISTRATION_TOKEN={registration_token}\n')
+        file.write(f'FIREBASE_REGISTRATION_TOKEN={fcmToken}\n')
         file.write(f'BANK_ID_TOKEN={bank_id_token}\n')
 
-    if registration_token is None or bank_id_token is None:
+    if fcmToken is None or bank_id_token is None:
         return 'No token found in request', 400
 
-    # Decode the Firebase token to get the uid
-    try:
-        decoded_token = auth.verify_id_token(firebaseIdToken)
-    except Exception as e:
-        print(f"An error occurred while verifying the ID token: {e}")
-    print("Decoded token: ", decoded_token)
+    print("Decoding Firebase ID token")
+    decoded_token = auth.verify_id_token(firebaseIdToken)
     uid = decoded_token['uid']
 
     # Set the custom claims
