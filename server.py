@@ -43,8 +43,7 @@ def receive_token():
 
     # Set the custom claims
     print("Setting custom claims for user: ", uid)
-    auth.set_custom_user_claims(uid, {'bankIdToken': bank_id_token})
-    auth.set_custom_user_claims(uid, {'subscribedToNotifications': subscribed_to_notifications})
+    auth.set_custom_user_claims(uid, {'bankIdToken': bank_id_token, 'subscribedToNotifications': subscribed_to_notifications})
     print("Custom claims set for user: ", uid)
     print("Claims: ", auth.get_user(uid).custom_claims)
 
@@ -74,6 +73,10 @@ def send_notification():
 
         claims = user.custom_claims
         print("User claims: ", claims)
+
+        if claims is None or not claims.get('subscribedToNotifications'):
+            print("User has not subscribed to notifications, skipping...")
+            continue
 
         print("Sending notification to user: ", user.email)
         print("User subscribed to notifications: ", claims.get('subscribedToNotifications'))
