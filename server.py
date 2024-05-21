@@ -66,6 +66,7 @@ def send_notification():
     print("********** STARTING LOOP **********")
     for user in users:
 
+        print("Sending notification to user: ", user.email)
         print("User uid: ", user.uid)
         print("Claims: ", auth.get_user(user.uid).custom_claims)
 
@@ -76,7 +77,6 @@ def send_notification():
             print("User has not subscribed to notifications, skipping...")
             continue
 
-        print("Sending notification to user: ", user.email)
         print("User subscribed to notifications: ", claims.get('subscribedToNotifications'))
 
         if claims.get('subscribedToNotifications') and claims.get('fcmToken') is not None:
