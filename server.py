@@ -54,10 +54,10 @@ def receive_token():
 def send_notification():
 
     if not firebase_admin._apps:
-            initFirebase()
-            print("Firebase initialized")
-        else:
-            print("Firebase already initialized")
+        initFirebase()
+        print("Firebase initialized")
+    else:
+        print("Firebase already initialized")
 
     users = auth.list_users().iterate_all()
     print("Users: ", users)
