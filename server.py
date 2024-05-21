@@ -53,6 +53,12 @@ def receive_token():
 @app.route('/send-notification', methods=['POST'])
 def send_notification():
 
+    if not firebase_admin._apps:
+            initFirebase()
+            print("Firebase initialized")
+        else:
+            print("Firebase already initialized")
+
     users = auth.list_users().iterate_all()
     print("Users: ", users)
     print("length of users: ", len(users))
@@ -61,15 +67,6 @@ def send_notification():
         print("User uid: ", user.uid)
         claims = user.custom_claims
         print("User claims: ", claims)
-
-
-        if not firebase_admin._apps:
-            initFirebase()
-            print("Firebase initialized")
-        else:
-            print("Firebase already initialized")
-
-
 
         print("Sending notification to user: ", user.email)
         print("User subscribed to notifications: ", claims.get('subscribedToNotifications'))
