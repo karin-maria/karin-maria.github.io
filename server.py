@@ -53,6 +53,8 @@ def receive_token():
 @app.route('/send-notification', methods=['POST'])
 def send_notification():
 
+    jsondata = request.get_json()
+
     if not firebase_admin._apps:
         initFirebase()
         print("Firebase initialized")
@@ -75,6 +77,7 @@ def send_notification():
         print("User subscribed to notifications: ", claims.get('subscribedToNotifications'))
 
         if claims.get('subscribedToNotifications'):
+            print("Sending notificaion now!!")
             message = messaging.Message(
                 notification=messaging.Notification(
                     title=jsondata.get('title'),
