@@ -45,6 +45,8 @@ def receive_token():
     print("Setting custom claims for user: ", uid)
     auth.set_custom_user_claims(uid, {'bankIdToken': bank_id_token})
     auth.set_custom_user_claims(uid, {'subscribedToNotifications': subscribed_to_notifications})
+    print("Custom claims set for user: ", uid)
+    print("Claims: ", auth.get_user(uid).custom_claims)
 
     return 'Token received successfully', 200
 
