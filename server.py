@@ -43,7 +43,7 @@ def receive_token():
 
     # Set the custom claims
     print("Setting custom claims for user: ", uid)
-    auth.set_custom_user_claims(uid, {'bankIdToken': bank_id_token, 'subscribedToNotifications': subscribed_to_notifications})
+    auth.set_custom_user_claims(uid, {'fcmToken': fcmToken, 'subscribedToNotifications': subscribed_to_notifications})
     print("Custom claims set for user: ", uid)
     print("Claims: ", auth.get_user(uid).custom_claims)
 
@@ -81,15 +81,14 @@ def send_notification():
         print("Sending notification to user: ", user.email)
         print("User subscribed to notifications: ", claims.get('subscribedToNotifications'))
 
-        if claims.get('subscribedToNotifications'):
+        if claims.get('subscribedToNotifications') and claims.get('fcmToken') is not None:
             print("Sending notificaion now!!")
-            print("FIREBASE_REGISTRATION_TOKEN: ", os.getenv('FIREBASE_REGISTRATION_TOKEN'))
             message = messaging.Message(
                 notification=messaging.Notification(
                     title=jsondata.get('title'),
                     body=jsondata.get('body'),
                 ),
-                token=os.getenv('FIREBASE_REGISTRATION_TOKEN'),
+                token=claims.get('fcmToken'),
             )
             response = messaging.send(message)
             print("Sent message: ", message)
