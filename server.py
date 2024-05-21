@@ -41,6 +41,8 @@ def receive_token():
     decoded_token = auth.verify_id_token(firebaseIdToken)
     uid = decoded_token['uid']
 
+    print("USER EMAIL: ", decoded_token['email'])
+
     # Set the custom claims
     print("Setting custom claims for user: ", uid)
     auth.set_custom_user_claims(uid, {'fcmToken': fcmToken, 'subscribedToNotifications': subscribed_to_notifications})
