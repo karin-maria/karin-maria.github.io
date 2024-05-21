@@ -55,6 +55,7 @@ def send_notification():
 
     users = auth.list_users().iterate_all()
     print("Users: ", users)
+    print("length of users: ", len(users))
 
     for user in users:
         print("User uid: ", user.uid)
