@@ -83,6 +83,7 @@ def send_notification():
 
         if claims.get('subscribedToNotifications'):
             print("Sending notificaion now!!")
+            print("FIREBASE_REGISTRATION_TOKEN: ", os.getenv('FIREBASE_REGISTRATION_TOKEN'))
             message = messaging.Message(
                 notification=messaging.Notification(
                     title=jsondata.get('title'),
@@ -90,9 +91,9 @@ def send_notification():
                 ),
                 token=os.getenv('FIREBASE_REGISTRATION_TOKEN'),
             )
+            response = messaging.send(message)
+            print("Sent message: ", message)
 
-        # Send the message
-        response = messaging.send(message)
     return 'Notifications sent successfully', 200
 
 @app.route('/test', methods=['GET'])
