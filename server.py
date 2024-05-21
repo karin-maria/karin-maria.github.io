@@ -19,22 +19,18 @@ def receive_token():
         print("Firebase initialized")
     else:
         print("Firebase already initialized")
+
     jsondata = request.get_json()
     fcmToken = jsondata.get('fcmToken')
-    bank_id_token = jsondata.get('bankIdToken')
     firebaseIdToken = jsondata.get('firebaseIdToken')
-    subscribed_to_notifications = jsondata.get('subscribed_to_notifications')
+    subscribedToNotifications = jsondata.get('subscribedToNotifications')
 
     print("fcmTokenreceived: ", fcmToken)
-    print("Bank ID token received: ", bank_id_token)
     print("Firebase ID token received: ", firebaseIdToken)
-    print("Subscribed to notifications: ", subscribed_to_notifications)
+    print("Subscribed to notifications: ", subscribedToNotifications)
 
-    with open('.env', 'a') as file:
-        file.write(f'FIREBASE_REGISTRATION_TOKEN={fcmToken}\n')
-        file.write(f'BANK_ID_TOKEN={bank_id_token}\n')
 
-    if fcmToken is None or bank_id_token is None:
+    if fcmToken is None or firebaseIdToken is None or subscribedToNotifications is None:
         return 'No token found in request', 400
 
     print("Decoding Firebase ID token")
@@ -45,7 +41,7 @@ def receive_token():
 
     # Set the custom claims
     print("Setting custom claims for user: ", uid)
-    auth.set_custom_user_claims(uid, {'fcmToken': fcmToken, 'subscribedToNotifications': subscribed_to_notifications})
+    auth.set_custom_user_claims(uid, {'fcmToken': fcmToken, 'subscribedToNotifications': subscribedToNotifications})
     print("Custom claims set for user: ", uid)
     print("Claims: ", auth.get_user(uid).custom_claims)
 
