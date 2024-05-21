@@ -64,7 +64,7 @@ def send_notification():
     user_count = sum(1 for _ in auth.list_users().iterate_all())
     print("Number of users: ", user_count)
 
-    print("N: " auth.list_users())
+    print("N: ", auth.list_users())
 
     for user in users:
         print("User uid: ", user.uid)
