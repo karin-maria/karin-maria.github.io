@@ -66,7 +66,9 @@ def send_notification():
     user_count = sum(1 for _ in auth.list_users().iterate_all())
     print("Number of users: ", user_count)
 
+    print("********** STARTING LOOP **********")
     for user in users:
+
         print("User uid: ", user.uid)
         print("Claims: ", auth.get_user(user.uid).custom_claims)
 
