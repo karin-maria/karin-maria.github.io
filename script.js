@@ -2,7 +2,7 @@ function sendTestNotification() {
 
     console.log('Sending test notification...');
 
-    var url = 'https://brotjefors.pythonanywhere.com/send-notification';
+    var url = 'https://firebase-api.loca.lt/send-notification';
 
     var data = {
         title: 'Test Notification',
