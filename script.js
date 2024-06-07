@@ -5,7 +5,7 @@ function sendTestNotification() {
 
     var data = {
         title: 'Test Notification',
-        body: 'This is a test notification from the WebView.',
+        body: 'This is a test notification from the WebView',
     };
 
     fetch(url, {
@@ -21,7 +21,14 @@ function sendTestNotification() {
         if (!response.ok) {
             throw new Error('Network response was not ok');
         }
-        return response.json();
+        const contentType = response.headers.get('content-type');
+        if (contentType && contentType.includes('application/json')) {
+            return response.json();
+        } else {
+            return response.text().then(text => {
+                throw new Error('Expected JSON, got text: ' + text);
+            });
+        }
     })
     .then(data => {
         console.log('Test notification sent successfully:', data);
