@@ -1,5 +1,4 @@
 function sendTestNotification() {
-
     console.log('Sending test notification...');
 
     var url = 'https://firebase-api.loca.lt/send-notification';
@@ -12,12 +11,24 @@ function sendTestNotification() {
     fetch(url, {
         method: 'POST',
         headers: {
-        'Content-Type': 'application/json',
+            'Content-Type': 'application/json; charset=UTF-8',
+            'bypass-tunnel-reminder': '1',
+            'User-Agent': 'WebView',
         },
         body: JSON.stringify(data),
+    })
+    .then(response => {
+        if (!response.ok) {
+            throw new Error('Network response was not ok');
+        }
+        return response.json();
+    })
+    .then(data => {
+        console.log('Test notification sent successfully:', data);
+    })
+    .catch(error => {
+        console.error('Error sending test notification:', error);
     });
-
-    console.log('Test notification sent!');
 }
 
 function toggleTheme() {
