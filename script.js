@@ -1,7 +1,8 @@
 function sendTestNotification() {
     console.log('Sending test notification...');
 
-    var url = 'https://norion-firebase-api.loca.lt/send-notification';
+    //var url = 'https://norion-firebase-api.loca.lt/send-notification';
+    var url = 'http://10.20.20.95:5000/send-notification';
 
     var data = {
         title: 'Test Notification',
